@@ -185,3 +185,13 @@ def get_amenties_available(amenities_feature: str, df: pd.DataFrame) -> pd.DataF
 def apply_processing_output_schema(df: pd.DataFrame, schema: Dict = PREPRO_OUTPUT_SCHEMA) -> pd.DataFrame:
     output = df.astype(schema)
     return output[schema.keys()]
+
+
+def map_categorical_features(
+    features_to_map: Dict[str, Dict],
+    df: pd.DataFrame
+) -> pd.DataFrame:
+    output = df.copy()
+    for feature, mapping in features_to_map.items():
+        output[feature] = df[feature].map(mapping)
+    return output

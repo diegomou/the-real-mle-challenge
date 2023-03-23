@@ -7,7 +7,7 @@ from refactor.processing_utils import (
     has_amenity, has_air_conditioning, has_breakfast, has_heating, has_kitchen,
     has_internet, has_tv, has_wifi, get_amenties_available, get_price_from_string,
     parse_property_price, remove_records_below_threshold_price,
-    create_categorical_price_labels
+    create_categorical_price_labels, map_categorical_features
 )
 
 AMENITIES_EXAMPLE = pd.DataFrame({
@@ -198,5 +198,22 @@ def test_create_categorical_price_labels():
     expected = pd.DataFrame({
         'price': PRICING_EXAMPLE['price'].to_list(),
         'category': pd.Categorical([1, 0, 0, 2, 3, 3, 2, 3], [0, 1, 2, 3], ordered=True)
+    })
+    assert expected.equals(actual)
+
+
+def test_map_categorical_features():
+    mapping = {
+        'vehicle': {'car': 1, 'bike': 2, 'boat': 0},
+        'animal': {'cat': 2, 'dog': 0, 'frog': 1}
+    }
+    example = pd.DataFrame({
+        'vehicle': ['car', 'car', 'boat', 'bike'],
+        'animal': ['cat', 'dog', 'dog', 'frog']
+    })
+    actual = map_categorical_features(features_to_map=mapping, df=example)
+    expected = pd.DataFrame({
+        'vehicle': [1, 1, 0, 2],
+        'animal': [2, 0, 0, 1]
     })
     assert expected.equals(actual)
