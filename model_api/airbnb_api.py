@@ -33,7 +33,7 @@ def make_predictions():
     )
     return jsonify({
         'id': request.values['id'],
-        'prediction': prediction
+        'price_category': prediction
     })
 
 
