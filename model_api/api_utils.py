@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 import pickle
 from sklearn.base import BaseEstimator
-from typing import Dict, List
+from typing import Dict, List, Union
 
 AIRBNB_FEAT_MAPPING = {
    'room_type': {
@@ -18,6 +18,7 @@ AIRBNB_OUTPUT_MAPPING = {
     2: "high",
     3: "lux"
 }
+
 
 def load_model(path: str) -> BaseEstimator:
     return pickle.load(open(path, 'rb'))
@@ -36,7 +37,7 @@ def get_model_features(request: Dict, model_features: List[str]) -> Dict:
     return output
 
 
-def map_values(value_to_map: str | int, mapping: Dict):
+def map_values(value_to_map: Union[str, int], mapping: Dict):
     """
     Maps a string by using a mapping dictionary. The keys are
     the values of a given feature, and the values are the mapping
@@ -62,11 +63,17 @@ def make_model_prediction(model: BaseEstimator, features: np.array) -> int:
 
 
 def process_features_airbnb(features: Dict) -> np.array:
+    """
+    Giving a dict with the features given to the API, this function
+    maps the string & categorical features into their corresponding
+    integer values. Those values were assigned by the DS who trained
+    the model.
+    """
     for feature, mapping in AIRBNB_FEAT_MAPPING.items():
         features[feature] = map_values(features[feature], mapping)
     return np.fromiter(features.values(), dtype=float).reshape(1, -1)
 
 
 def make_predictions_airbnb(model: BaseEstimator, features: np.array) -> str:
-    prediction_int = make_predictions_airbnb(model=model, features=features)
+    prediction_int = make_model_prediction(model=model, features=features)
     return map_values(value_to_map=prediction_int, mapping=AIRBNB_OUTPUT_MAPPING)

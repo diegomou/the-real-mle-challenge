@@ -3,7 +3,8 @@ import pytest
 from sklearn.base import BaseEstimator
 
 from model_api.api_utils import (
-    get_model_features, map_values, make_model_prediction
+    get_model_features, map_values, make_model_prediction,
+    make_predictions_airbnb
 )
 
 EXAMPLE_ALL = {
@@ -95,4 +96,11 @@ def test_make_model_prediction_label_0():
     example = np.array([1, 0, 0])
     actual = make_model_prediction(model=MockEstimator, features=example)
     expected = 0
+    assert actual == expected
+
+
+def test_make_predictions_airbnb():
+    example = np.array([1, 0, 0])
+    actual = make_predictions_airbnb(model=MockEstimator, features=example)
+    expected = 'low'
     assert actual == expected
