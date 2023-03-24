@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from api_utils import (
-    airbnb_api_features_processing, get_model_features,
-    load_model, make_model_prediction
+    process_features_airbnb, get_model_features,
+    load_model, make_predictions_airbnb
 )
 
 app = Flask(__name__)
@@ -26,8 +26,8 @@ def make_predictions():
         request.values,
         model_features=FEATURES_TO_GET
     )
-    features_proc = airbnb_api_features_processing(features=features)
-    prediction = make_model_prediction(
+    features_proc = process_features_airbnb(features=features)
+    prediction = make_predictions_airbnb(
         model=ESTIMATOR,
         features=features_proc
     )
