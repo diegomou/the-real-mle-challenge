@@ -1,15 +1,13 @@
+from functools import partial
 import numpy as np
 import pandas as pd
 from typing import Callable, Dict, List
 from sklearn.base import BaseEstimator
-from sklearn.metrics import accuracy_score, roc_auc_score, precision_score, recall_score, confusion_matrix
+from sklearn.metrics import accuracy_score, classification_report
 
 METRICS_TO_CALC = {
     'accuracy': accuracy_score,
-    'precision': precision_score,
-    'recall': recall_score,
-    'auc': roc_auc_score,
-    'cm': confusion_matrix
+    'by_class_rep': partial(classification_report, output_dict=True)
 }
 
 
@@ -32,7 +30,13 @@ def fit_model(
     return clf
 
 
-def evaluate_model(y: np.array, x: np.array, estimator: BaseEstimator, metrics: Dict = METRICS_TO_CALC) -> Dict:
+def evaluate_model(
+    y_true: np.array,
+    y_pred_proba: np.array,
+    y_pred: np.array,
+    metrics: Dict = METRICS_TO_CALC
+) -> Dict:
     output = dict()
-    for metric, metric_estimator in METRICS_TO_CALC:
-        output[metric] = metric_estimator()
+    for metric, metric_estimator in metrics.items():
+        output[metric] = metric_estimator(y_true, y_pred)
+    return output

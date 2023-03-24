@@ -1,10 +1,13 @@
+import json
 import pandas as pd
 import pickle
 from sklearn.base import BaseEstimator
 from sklearn.model_selection import train_test_split
 from typing import Callable, Dict, List
 
-from model_utils import get_model_features, get_model_target, fit_model
+from model_utils import (
+    get_model_features, get_model_target, fit_model, evaluate_model
+)
 
 def source_csv(path: str) -> pd.DataFrame:
     return pd.read_csv(path)
@@ -16,6 +19,11 @@ def source_parquet(path: str) -> pd.DataFrame:
 
 def sink_parquet(path: str, df: pd.DataFrame):
     df.to_parquet(path)
+
+
+def sink_json(path: str, payload: Dict):
+    with open(path, 'w') as file:
+        json.dump(payload, file)
 
 
 def sink_return(df: pd.DataFrame) -> pd.DataFrame:
@@ -51,7 +59,7 @@ def train_model_pipeline(
     processed = source()
     features = get_model_features(df=processed, features=model_specs['features'])
     target = get_model_target(df=processed, target=model_specs['target'])
-    X_train, _, y_train, _ = train_test_split(
+    X_train, X_test, y_train, y_test = train_test_split(
         features, target,
         **model_specs['train_test_split_params']
     )
@@ -61,7 +69,12 @@ def train_model_pipeline(
         x=X_train,
         y=y_train
     )
-    return sink_model(model), sink_eval(model)
+    metrics_eval = evaluate_model(
+        y_true=y_test,
+        y_pred=model.predict(X_test),
+        y_pred_proba=model.predict_proba(X_test)
+    )
+    return sink_model(model), sink_eval(metrics_eval)
 
 
 def run_pipeline(sink: Callable, source: Callable, pipeline_steps: Callable):
