@@ -3,9 +3,9 @@ RUN apt-get update
 RUN apt-get install python3.7
 RUN apt-get -y install python3-pip
 RUN apt-get -y install python3-setuptools
-WORKDIR /model_api
-COPY ./models /model_api/models
-COPY ./requirements.txt /model_api/
-COPY ./model_api /model_api/
+WORKDIR /airbnb
+COPY ./requirements.txt /airbnb/
+COPY ./models /airbnb/models
+COPY ./model_api /airbnb/model_api/
 RUN pip3 install -r requirements.txt
-CMD ["python3", "airbnb_api.py"]
+CMD ["python3", "/airbnb/model_api/airbnb_api.py"]

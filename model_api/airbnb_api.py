@@ -1,5 +1,5 @@
 from flask import Flask, jsonify, request
-from model_api.api_utils import (
+from api_utils import (
     airbnb_api_features_processing, get_model_features,
     load_model, make_model_prediction
 )
