@@ -5,7 +5,7 @@ from sklearn.base import BaseEstimator
 from sklearn.model_selection import train_test_split
 from typing import Callable, Dict, List
 
-from model_utils import (
+from refactor.model_utils import (
     get_model_features, get_model_target, fit_model, evaluate_model
 )
 

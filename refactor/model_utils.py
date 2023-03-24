@@ -32,7 +32,6 @@ def fit_model(
 
 def evaluate_model(
     y_true: np.array,
-    y_pred_proba: np.array,
     y_pred: np.array,
     metrics: Dict = METRICS_TO_CALC
 ) -> Dict:
