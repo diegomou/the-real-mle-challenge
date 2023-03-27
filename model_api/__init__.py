@@ -1,1 +1,2 @@
-import model_api.api_utils as api_utils
+import sys
+sys.path.append('./model_api')
