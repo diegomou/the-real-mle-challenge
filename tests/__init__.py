@@ -1,1 +1,1 @@
-import model_api.api_utils as api_utils
+from model_api import api_utils

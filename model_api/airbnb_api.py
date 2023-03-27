@@ -1,4 +1,6 @@
 from flask import Flask, jsonify, request
+import sys
+sys.path.append('./model_api')
 from api_utils import (
     process_features_airbnb, get_model_features,
     load_model, make_predictions_airbnb
