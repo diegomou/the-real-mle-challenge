@@ -19,7 +19,7 @@ PRICE_BINS = [10, 90, 180, 400, np.inf]
 PRICE_LABELS = [0, 1, 2, 3]
 FEATURES_MAPPINGS = {
     'room_type': {"Shared room": 1, "Private room": 2, "Entire home/apt": 3, "Hotel room": 4},
-    'neighbourhood_group_cleansed': {"Bronx": 1, "Queens": 2, "Staten Island": 3, "Brooklyn": 4, "Manhattan": 5}  
+    'neighbourhood_group_cleansed': {"Bronx": 1, "Queens": 2, "Staten Island": 3, "Brooklyn": 4, "Manhattan": 5}
 }
 CALLABLES_TO_APPLY = [
     get_only_relevant_features,

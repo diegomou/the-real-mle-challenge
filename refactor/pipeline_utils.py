@@ -9,6 +9,7 @@ from refactor.model_utils import (
     get_model_features, get_model_target, fit_model, evaluate_model
 )
 
+
 def source_csv(path: str) -> pd.DataFrame:
     return pd.read_csv(path)
 
@@ -40,7 +41,7 @@ def seq_steps_pipeline(
         df: pd.DataFrame
 ) -> pd.DataFrame:
     """
-    To create a pipeline callable that runs sequential steps. As this 
+    To create a pipeline callable that runs sequential steps. As this
     function applies the callables in callables_to_apply following the
     list order, the user must be careful when you define that order.
     """

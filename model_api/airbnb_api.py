@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 
 ARTIFACT_PATH = './models/simple_classifier.pkl'
-# Important: this list must follow the order used by the DS in training
+#  Important: this list must follow the order used by the DS in training
 FEATURES_TO_GET = [
     'neighbourhood', 'room_type', 'accommodates', 'bathrooms', 'bedrooms'
 ]

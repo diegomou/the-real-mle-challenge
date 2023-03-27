@@ -45,7 +45,7 @@ MAPPING = {
 class MockEstimator(BaseEstimator):
     def predict(instance: np.array) -> int:
         return np.array([1]) if np.array_equal(instance, np.array([1, 0, 1])) else np.array([0])
-    
+
 
 def test_get_model_features_ok():
     actual = {

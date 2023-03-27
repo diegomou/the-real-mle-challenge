@@ -5,12 +5,11 @@ from sklearn.base import BaseEstimator
 from typing import Dict, List, Union
 
 AIRBNB_FEAT_MAPPING = {
-   'room_type': {
+    'room_type': {
         "Shared room": 1, "Private room": 2, "Entire home/apt": 3, "Hotel room": 4
     },
-    'neighbourhood': {
-        "Bronx": 1, "Queens": 2, "Staten Island": 3, "Brooklyn": 4, "Manhattan": 5
-    }
+    'neighbourhood':
+        {"Bronx": 1, "Queens": 2, "Staten Island": 3, "Brooklyn": 4, "Manhattan": 5}
 }
 AIRBNB_OUTPUT_MAPPING = {
     0: "low",
