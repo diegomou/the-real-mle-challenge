@@ -45,15 +45,10 @@ def map_values(value_to_map: Union[str, int], mapping: Dict):
     in mapping dict, then returns the mapped value. If not, it
     returns the original value.
     """
-    mapped_value = None
-    for candidate in mapping.keys():
-        if value_to_map == candidate:
-            mapped_value = mapping[candidate]
-            break
-    if mapped_value is None:
-        raise KeyError(f'{value_to_map} wasn`t found in the mapping dict')
+    if value_to_map in mapping.keys():
+        return mapping[value_to_map]
     else:
-        return mapped_value
+        raise KeyError(f'{value_to_map} wasn`t found in the mapping dict')
 
 
 def make_model_prediction(model: BaseEstimator, features: np.array) -> int:
